@@ -1,4 +1,4 @@
-module github/go-xuan/ossx
+module github.com/go-xuan/ossx
 
 go 1.23.0
 
