@@ -3,7 +3,7 @@ package init
 import (
 	"github.com/go-xuan/ossx"
 
-	"github.com/go-xuan/quanx/configx"
+	"github.com/go-xuan/configx"
 	"github.com/go-xuan/utilx/errorx"
 )
 
