@@ -14,11 +14,6 @@ var (
 	builders *typex.Enum[string, ClientBuilder] // 客户端构造函数池
 )
 
-func init() {
-	// 注册minio客户端构建器
-	RegisterClientBuilder("minio", MinioClientBuilder)
-}
-
 // RegisterClientBuilder 注册客户端构造函数
 func RegisterClientBuilder(name string, builder ClientBuilder) {
 	if builders == nil {
