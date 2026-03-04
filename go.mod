@@ -3,10 +3,10 @@ module github.com/go-xuan/ossx
 go 1.25
 
 require (
-	github.com/go-xuan/configx v1.26.6
-	github.com/go-xuan/nacosx v1.26.6
+	github.com/go-xuan/configx v1.26.7
+	github.com/go-xuan/nacosx v1.26.7
 	github.com/go-xuan/typex v1.26.0
-	github.com/go-xuan/utilx v1.26.2
+	github.com/go-xuan/utilx v1.26.3
 	github.com/minio/minio-go/v7 v7.0.98
 	github.com/sirupsen/logrus v1.9.4
 )
@@ -25,7 +25,7 @@ require (
 	github.com/klauspost/compress v1.18.2 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.11 // indirect
 	github.com/klauspost/crc32 v1.3.0 // indirect
-	github.com/magiconair/properties v1.8.6 // indirect
+	github.com/magiconair/properties v1.8.10 // indirect
 	github.com/minio/crc64nvme v1.1.1 // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
