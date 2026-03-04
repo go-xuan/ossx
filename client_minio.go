@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/go-xuan/utilx/errorx"
+	"github.com/go-xuan/utilx/filex"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
@@ -74,6 +75,36 @@ func (c *MinioClient) CreateBucket(ctx context.Context, bucket string, options .
 	return nil
 }
 
+func (c *MinioClient) Get(ctx context.Context, key string, options ...interface{}) (io.ReadCloser, error) {
+	opts := convertOptions[minio.GetObjectOptions](options...)
+	obj, err := c.GetClient().GetObject(ctx, c.config.Bucket, key, opts)
+	if err != nil {
+		return nil, errorx.Wrap(err, "get minio object failed")
+	}
+	return obj, nil
+}
+
+func (c *MinioClient) Download(ctx context.Context, key string, options ...interface{}) error {
+	// 获取对象
+	opts := convertOptions[minio.GetObjectOptions](options...)
+	obj, err := c.GetClient().GetObject(ctx, c.config.Bucket, key, opts)
+	if err != nil {
+		return errorx.Wrap(err, "get minio object failed")
+	}
+	defer errorx.Close(obj)
+
+	// 读取数据
+	var data []byte
+	if data, err = io.ReadAll(obj); err != nil {
+		return errorx.Wrap(err, "read minio object data failed")
+	}
+	// 写入文件
+	if err = filex.WriteFile(key, data); err != nil {
+		return errorx.Wrap(err, "write minio object file failed")
+	}
+	return nil
+}
+
 func (c *MinioClient) Upload(ctx context.Context, key string, reader io.Reader, options ...interface{}) error {
 	opts := convertOptions[minio.PutObjectOptions](options...)
 	info, err := c.GetClient().PutObject(ctx, c.config.Bucket, key, reader, -1, opts)
@@ -83,15 +114,6 @@ func (c *MinioClient) Upload(ctx context.Context, key string, reader io.Reader, 
 		return errorx.New("minio upload object size is zero")
 	}
 	return nil
-}
-
-func (c *MinioClient) Get(ctx context.Context, key string, options ...interface{}) (io.ReadCloser, error) {
-	opts := convertOptions[minio.GetObjectOptions](options...)
-	obj, err := c.GetClient().GetObject(ctx, c.config.Bucket, key, opts)
-	if err != nil {
-		return nil, errorx.Wrap(err, "get minio object failed")
-	}
-	return obj, nil
 }
 
 func (c *MinioClient) Exist(ctx context.Context, key string, options ...interface{}) (bool, error) {

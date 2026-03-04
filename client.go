@@ -45,8 +45,9 @@ type Client interface {
 	Close() error             // 关闭客户端
 
 	CreateBucket(ctx context.Context, name string, options ...interface{}) error                           // 创建bucket
-	Upload(ctx context.Context, key string, reader io.Reader, options ...interface{}) error                // 上传文件
 	Get(ctx context.Context, key string, options ...interface{}) (io.ReadCloser, error)                    // 获取文件
+	Download(ctx context.Context, key string, options ...interface{}) error                                // 获取文件
+	Upload(ctx context.Context, key string, reader io.Reader, options ...interface{}) error                // 上传文件
 	Exist(ctx context.Context, key string, options ...interface{}) (bool, error)                           // 判断文件是否存在
 	Remove(ctx context.Context, key string, options ...interface{}) error                                  // 删除文件
 	GetUrl(ctx context.Context, key string, expires time.Duration, options ...interface{}) (string, error) // 获取文件url
