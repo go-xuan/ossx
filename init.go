@@ -21,5 +21,5 @@ func Initialize() error {
 		return nil
 	}
 	logger.Warn("initialize failed")
-	return errorx.New("failed to initialize minio client")
+	return errorx.New("failed to initialize ossx")
 }
